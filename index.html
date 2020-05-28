@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="shortcut icon" href="./img/mask_logo.png" type="image/x-icon">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+        <link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+        <script src="js/modernizr.js"></script> <!-- Modernizr -->
+        <script src="dbHandle.js"></script>   
+
+        <!-- <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css"/> -->
+        <!-- <script src="js/jquery-1.11.1.min.js"></script> -->
+        <!-- <script src="js/jquery.mobile-1.4.5.min.js"></script> -->
+
+        <title>마스크알리미</title>
+        <style>
+            /* .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;} */
+            .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 250px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+            .wrap * {padding: 0;margin: 0;}
+            /* .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;} */
+            .wrap .info {width: 286px;height: 230px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+            .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+            /* .info .title {padding: 3px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;} */
+            .info .title {padding: 3px 0 0 10px;height: 30px;background: #3d853b;color:white;border-bottom: 1px solid #ddd;font-size: 18px;}
+            .info .close {position: absolute;top: 7px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+            .info .close:hover {cursor: pointer;}
+            .info .body {position: relative;overflow: hidden;}
+            /* .info .desc {position: relative;margin: 13px 0 0 13px;height: 80px;} */
+            .info .desc {position: relative;margin: 13px 0 0 13px;height: 180px;}
+            .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+            .desc .jibun {font-size: 14px;color: #888;margin-top: 2px;}
+            .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+            .info .link {color: #5085BB;margin-top:-15px;}
+        
+            /* Added more css from GY */
+            .search {
+                margin-bottom: auto;
+                margin-top: 40px;
+                height: 60px;
+                background-color: #fff;
+                padding: 10px;
+                z-index: 999;
+                border-radius: 100px;
+            }
+            .search-input {
+                color: white;
+                border: 0;
+                outline: 0;
+                background: none;
+                width: 0;
+                margin-left: 5px;
+                caret-color: transparent;
+                line-height: 40px;
+                transition: width 0.4s linear;
+                border-radius: 100px;
+            }
+            .search 
+            .search-input {
+                padding: 0 ;
+                min-width: 70vw;
+            
+                caret-color: #536bf6;
+                font-size: 14px;
+                font-weight: 300;
+                vertical-align: center;
+                color: black;
+                transition: width 0.4s linear;
+                border-radius: 100px;
+            }
+            @media screen and (min-width: 10px) {
+                .search-input{ 
+                    min-width: 600px;
+                    border-radius: 100px;
+                }
+            }
+            .search:hover>.search-icon {
+                background-color: rgba(59,133,61,0.8);
+                color: #fff;
+                border-radius: 100px;
+            }
+            .search-icon {
+                height: 50px;
+                width: 50px;
+                margin-top: -5px;
+                float: right;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                background-color: rgba(59,133,61,1);
+                border-radius: 100px;
+            }
+            
+            a:link {
+                text-decoration: none;
+            }
+
+            body {
+                font-size: 1.4rem;
+                font-family: "Source Sans Pro", sans-serif;
+                color: #003c5d;
+                background-color: #ffffff;
+            }
+			.modal-title{
+				font-size: 18px;
+				width: 100%;
+				text-align: center;
+				margin-top: 15px;
+			}
+			a{
+				color: #3d853b;
+				font-weight: 300;
+			}
+			.btn-secondary{
+				font-size: 15px;
+			}
+			.btn-primary{
+				font-size: 15px;
+				background-color: #3d853b;
+				color: aliceblue;
+				border-style: none;
+			}
+			.btn-primary:hover{
+				background-color: rgba(59,133,61,0.7);
+			}
+			.fa-bookmark:before {
+                content: "\f02e";
+                            color: #3d853b;
+            }
+            /*.cd-stretchy-nav */
+            .modal-dialog {
+                display: inline-block;
+                vertical-align: center;
+                height: 100%;
+            }
+
+            .modal-content {
+                position: fixed;
+                left: 50%;
+                width: 80vw;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+
+        <script>    
+            // 전역변수
+            var db = null;           // DB 객체
+            var varCafeName;         // 현재 맛집 이름
+            var recordSet = null;    // 현재 레코드셋
+            var varPosition = null; // 현재 레코드      
+            var flag;                 // 입력/수정 페이지 식별
+            
+            $(document).ready(function() {
+                
+                // 폰갭 API 초기화
+                initPhoneGap();
+        
+                // DB, Table 열기         
+                openDB();  
+                createTable();  
+                // purge all search logs
+                // purch_all();
+                                    
+                // if click search button, insert search long             
+                $('#btn_search_location').click(function() {
+                    insert_search_logs(); 
+                });   
+                
+                // Trigger a Button Click on Enter
+                // Get the input field
+                var input = document.getElementById("searchQuery");
+
+                // Execute a function when the user releases a key on the keyboard
+                input.addEventListener("keyup", function(event) {
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    // Cancel the default action, if needed
+                    event.preventDefault();
+                    // Trigger the button element with a click
+                    document.getElementById("btn_search_location").click();
+                }
+                });
+            });   
+            
+            function initPhoneGap() {
+                    document.addEventListener('deviceready', onDeviceReady, true);
+            }   
+            function onDeviceReady() {
+                navigator.notification.alert('장치 준비됨', null, '폰갭 API');
+            } 
+        </script>
+    </head>
+
+    <body>
+        <div id ="b" class="d-flex justify-content-center h-100">
+            <div class="search"> 
+                <input type="text" class="search-input" name="searchQuery" id="searchQuery" placeholder="ex) 서울특별시 마포구 or 서울 특별시 마포구 망원동">
+                <button class="search-icon" type="submit" id="btn_search_location" onclick="getSearchQuery()"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+
+<!-- fav pharmacies modal -->
+        <nav class="cd-stretchy-nav add-custom-dialog" style="z-index: 9999;" id="collapsibleNavbar">
+            <div id="phar_info_modal_test"> </div>
+        </nav> 
+
+        <nav class="cd-stretchy-nav add-content" style="z-index: 850" id="collapsibleNavbar">
+            
+            <a class="cd-nav-trigger" href="#0">
+                <span aria-hidden="true"></span>
+            </a>
+
+            <ul>
+                <li><a href="#0"></a></li>
+                <li><a class="nav-link" data-toggle="modal" data-target="#list_modal" onclick="list_fav_pharmacies()" title="저장된 약국 리스트 보기" style="margin-right:10px;"><i style="margin-right: 22px; margin-top: 20px; font-size: 24px;" class="fa fa-bookmark"><span>즐겨찾기</span></i></a></li>
+                <li><a href="https://m.map.kakao.com/actions/index"><i style="margin-right: 15px; margin-top: 20px; font-size: 22px;" class="fa fa-map"><span>길찾기</span></i></a></li>
+                <li><a href="#0"></a></li>
+            </ul>
+            <span aria-hidden="true" class="stretchy-nav-bg"></span>
+        </nav>  
+<!-- kakao map -->
+        <div id="map" style="width:100%;height:100vh; position: relative; z-index: 500;display: inline-block; margin-top:-100px;"></div>
+        <!-- KAKAO MAP API -->
+        <script
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=bccea03233381c4bda1a0c125348f99a&libraries=clusterer"></script>
+        <!-- COVID19 PUBLIC MASK API -->
+        <script>
+           
+            getSearchQuery()
+            function getSearchQuery(){ // @@@
+                
+                var query = ""
+                var url = ""    
+                query = document.getElementById("searchQuery").value
+                // convert 서울시 to 서울특별시
+                let query_str = ""
+                let query_arr = query.split(" ");
+                for (let i = 0; i < query_arr.length; i++) {
+                    if (i == 0) {
+                        if (query_arr[i] == '서울시') {
+                            query_str += '서울특별시'
+                        } else {
+                            query_str += query_arr[i];
+                        }
+                    } else {
+                        query_str += '%20' + query_arr[i];
+                    }
+                }
+                
+                // if there is only one word, send error message 
+                url = 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=' + query_str
+                fetch(url)
+            
+                if (query_str != "") {
+                    url = 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=' + query_str
+                } else {
+                    url = 'https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByAddr/json?address=서울특별시%20마포구'
+                }
+
+                fetch(url)
+                .then(res => res.json())
+                .then (myJson => {
+                    // console.log(url) 
+                    let stores = myJson.stores;
+                    // 마커 생성 
+                    var markers = [];
+                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                        mapOption = {
+                            center: new kakao.maps.LatLng(stores[0]["lat"],stores[0]["lng"]-0.025), // 지도의 중심좌표
+                            // center: new kakao.maps.LatLng(stores[0]["lat"],stores[0]["lng"]), // 지도의 중심좌표
+                            level: 5, // 지도의 확대 레벨
+                            mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+                        }; 
+        
+                    // $$$
+                    // 왜 지도 센터가 완벽하게 안 맞을까
+                    // mapOption 센터 좌표 확인하기
+                    if (query_arr.length > 2) {
+                        mapOption = {
+                            center: new kakao.maps.LatLng(stores[0]["lat"],stores[0]["lng"]), // 지도의 중심좌표
+                            level: 5, // 지도의 확대 레벨
+                            mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
+                        }; 
+                    }
+                    
+                    // 지도를 생성한다 
+                    var map = new kakao.maps.Map(mapContainer, mapOption); 
+                    // 마커 클러스터러를 생성합니다 
+                    var clusterer = new kakao.maps.MarkerClusterer({
+                        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+                        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+                        minLevel: 6 // 클러스터 할 최소 지도 레벨 
+                    });
+
+                    for (var i = 0; i < stores.length; i++) {
+                
+                        let code = stores[i]["code"];
+                        let addr = stores[i]["addr"];
+                        let lat = stores[i]["lat"];
+                        let lng = stores[i]["lng"];
+                        let name = stores[i]["name"];
+                        let remain_stat = stores[i]["remain_stat"];
+
+                        switch(remain_stat){
+                            case "plenty":
+                                remain_stat = "<span style='color:#3d853b;'>100개 이상</span>";
+                                imgSelect = 'img/marker_green.png'
+                                break;
+                            case "some":
+                                remain_stat = "<span style='color:orange;'>30개 ~ 99개</span>";
+                                imgSelect = 'img/marker_yellow.png'
+                                break;
+                            case "few":
+                                remain_stat = "<span style='color:red;'>2개 ~ 29개</span>";
+                                imgSelect = 'img/marker_red.png'
+                                break;
+                            default:
+                                remain_stat = "재고 없음"
+                                imgSelect = 'img/marker_gray.png'
+                                break;
+                        }
+                        // Define an object to add fav pharmacy info
+                        let phar = {
+                            'code': code
+                            , 'name': name
+                            , 'addr': addr
+                            , 'lat': lat
+                            , 'lng': lng
+                            , 'remain_stat': remain_stat
+                            , 'memo': ''
+                        }
+                        
+                        // 마커이미지의 주소입니다    
+                        var imageSrc = imgSelect, 
+                        imageSize = new kakao.maps.Size(30, 33), // 마커이미지의 크기입니다
+                        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                        
+                        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
+
+                        var marker = new kakao.maps.Marker({
+                            position: new kakao.maps.LatLng(lat, lng)
+                            , map:map // 마커 표시할 지도
+                            , code:code 
+                            , addr:addr 
+                            , image: markerImage // 마커이미지 설정 
+                        });
+
+                        let search_pharmacy = name;
+                        let addr_arr = addr.split(" ");
+                        for (let i = 0; i < 2; i++) {
+                            search_pharmacy += '%20' + addr_arr[i];
+                        }
+                        // 커스텀 오버레이에 표시할 컨텐츠 입니다
+                        // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+                        // 별도의 이벤트 메소드를 제공하지 않습니다 
+                        var content = '<div class="wrap">' + 
+                            '    <div class="info">' + 
+                            '        <div class="title">' + name + 
+                            '        </div>' + 
+                            '        <div class="body">' + 
+                            '            <div class="desc">' + 
+                            '                <div class="ellipsis">' + addr + '</div>' + 
+                            '                <div class="jibun ellipsis">' + remain_stat  + 
+                            '                <div onclick="add_fav_phar()" style="float:right;margin-top:10px;margin-right:20px;"><i class="fa fa-thumbs-o-up fa-2x" style="color:#4287f5" aria-hidden="true"></i></div></div>' + 
+                            // '                <label styel="top:0px" for="phar_memo">메모 : </label>   ' + 
+                        '                <textarea cols="25" rows="5" name="phar_memo" id="phar_memo"  data-mini="true"></textarea>   ' + 
+                            '                <div><a href="https://map.kakao.com/?q=' + search_pharmacy + '" target="_blank" class="link">카카오맵으로 보기</a></div>' + 
+                            '            </div>' + 
+                            '        </div>' + 
+                            '    </div>' +    
+                            '</div>';
+                        
+                        var changed_phar;
+                        
+                        // Click Marker, update the info before displaying
+                        // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                            retrieve_fav_pharmacies_modal(phar, 'retrieve', search_pharmacy);
+                            changed_phar = phar;
+                            // Cache를 쓰면 시스템에 무리 가 / 나중에 오류날 가능성 높음 (which is localStotage)
+                            // the next function in retrieve_fav_pharmacies_modal()  dbhandle.js
+                        });
+                        //  #
+                        // call the insert fav_pharmacies function to save in db
+                        function add_fav_phar() {                                
+                            // if the phar exists already,
+                            // delete, else insert
+                            retrieve_fav_pharmacies_modal(changed_phar, 'thumup', '');
+                        }
+                        // changing marker overlay contents and saving btn
+                        markers.push(marker);
+
+                    } // end for loop
+                    
+                    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+                    var zoomControl = new kakao.maps.ZoomControl();
+                    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+                    // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+                    kakao.maps.event.addListener(map, 'zoom_changed', function() {        
+                        // 지도의 현재 레벨을 얻어옵니다
+                        var level = map.getLevel();
+                        
+                        var message = '현재 지도 레벨은 ' + level + ' 입니다';
+                        var resultDiv = document.getElementById('result');  
+                    
+                    });
+                    
+                    clusterer.addMarkers(markers);
+                }); // @@ 
+            }
+        </script>
+
+<!-- fav pharmacies modal -->
+        <div class="modal fade" id="list_modal" tabindex="-1" role="dialog" aria-labelledby="list_modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width: 80%; margin: 10%;">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">저장된 약국 리스트</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="list_html"> </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery-2.1.4.js"></script>
+        <script src="js/main.js"></script> <!-- Resource jQuery --> 
+    </body>
+</html>
